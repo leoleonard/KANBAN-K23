@@ -6,7 +6,7 @@ export function getSomething(req, res) {
   return res.status(200).end();
 }
 
-  // add a Lane
+// add a Lane
  
 export function addLane(req, res) {
   if (!req.body.name) {
@@ -47,5 +47,19 @@ export function deleteLane(req, res) {
     lane.remove(() => {
       res.status(200).end();
     });
+  });
+}
+
+// update a Lane name
+
+export function updateLane(req, res) {
+  if (!req.body.name) {
+    res.status(403).end();
+  }
+  Lane.findOneAndUpdate({ id: req.params.laneId }, {name: req.body.name}).exec((err, oldName) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+    res.json(oldName);
   });
 }
