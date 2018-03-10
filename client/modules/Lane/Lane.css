@@ -1,1 +1,8 @@
 /* Lane styles */
+ button {
+     border: 1px solid #fff;
+ }
+
+ .LaneDelete {
+     color: #000;
+ }
