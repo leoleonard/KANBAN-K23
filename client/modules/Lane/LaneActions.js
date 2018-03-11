@@ -52,7 +52,11 @@ export function createLane(lane) {
     export function fetchLanes() {
         return (dispatch) => {
           return callApi('lanes').then(res => {
-            dispatch(createLanes(res.lanes));
+            const normalized = normalize(res.lanes, lanes);
+            const { lanes: normalizedLanes, notes } = normalized.entities;
+      
+           dispatch(createLanes(normalizedLanes));
+           dispatch(createNotes(notes));
           });
         };
       }
