@@ -23,6 +23,14 @@ export function createLane(lane) {
       }
     };
   }
+  
+ // add LaneS
+  export function createLanes(lanesData) {
+    return {
+      type: CREATE_LANES,
+      lanes: lanesData,
+    };
+  }
 
   //update a Lane
   export function updateLane(lane) {
@@ -61,11 +69,10 @@ export function createLane(lane) {
         };
       }
       
-
-    export function createLanes(lanesData) {
-        return {
-          type: CREATE_LANES,
-          lanes: lanesData,
+      export function createLaneRequest(lane) {
+        return (dispatch) => {
+          return callApi('lanes', 'post', lane).then(res => {
+            dispatch(createLane(res));
+          });
         };
-      }
-
+      };
