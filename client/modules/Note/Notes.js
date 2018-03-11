@@ -1,4 +1,4 @@
-// wyświetla notatki w pojedynczej lini
+// wyświetla notatki w pojedynczej linii
 
 import React, { PropTypes } from 'react';
 import Note from './Note';
