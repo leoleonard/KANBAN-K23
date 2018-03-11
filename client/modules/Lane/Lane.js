@@ -3,21 +3,21 @@
 // import { bindActionCreators } from 'redux';
 
 import React, { PropTypes } from 'react';
-import NotesContainer from '../Note/NotesContainer';
+import NotesContainer from '../Note/NotesCointainer';
 import Edit from '../../components/Edit';
 
 // Import Style
 import styles from './Lane.css';
 
 const Lane = (props) => {
-  const { lane, laneNotes, updateLane, addNote, deleteLane } = props;
+  const { lane, laneNotes, updateLane, addNote, deleteLane, editLane } = props;
   const laneId = lane.id;
 
   return (
     <div className={styles.Lane}>
       <div className={styles.LaneHeader}>
         <div className={styles.LaneAddNote}>
-          <button onClick={() => addNote({ task: ‘New Note’}, laneId)}>Add Note</button>
+          <button onClick={() => addNote({ task: 'New Note'}, laneId)}>Add Note</button>
         </div>
         <h4><Edit
         className={styles.LaneName}

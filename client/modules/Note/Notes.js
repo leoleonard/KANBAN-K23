@@ -2,15 +2,16 @@
 
 import React, { PropTypes } from 'react';
 import Note from './Note';
-import styles from './Notes.css';
 import Edit from '../../components/Edit';
 
-const Notes = ({ notes, laneId, editNote, updateNote, deleteNote }) => {
-  return (<ul className="notes">{notes.map((note) =>
+import styles from './Note.css';
+
+const Notes = ({ notes, laneId, editNote, updateNote, deleteNote}) => {
+  const elements = notes.length ? notes.map((note) =>
     <Note
         id={note.id}
         key={note.id}
-        editing={note.editing}
+        // editing={note.editing}
      >
         <Edit
         editing={note.editing}
@@ -25,7 +26,13 @@ const Notes = ({ notes, laneId, editNote, updateNote, deleteNote }) => {
         onDelete={() => deleteNote(note.id, laneId)}
         />
     </Note>
-  )}</ul>);
+  ) : [];
+
+  return (
+    <ul className={styles.Notes}>
+    {elements}
+    </ul>
+    )
 };
 
 Notes.propTypes = {
