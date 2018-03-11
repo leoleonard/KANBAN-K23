@@ -1,5 +1,5 @@
 // Import Actions
-import { CREATE_NOTE, UPDATE_NOTE, DELETE_NOTE } from './NoteActions';
+import { CREATE_NOTE, UPDATE_NOTE, DELETE_NOTE, EDIT_NOTE } from './NoteActions';
 
 // Initial State
 const initialState = {};
@@ -17,16 +17,10 @@ export default function notes(state = initialState, action) {
     case DELETE_NOTE:
       return state.filter((note) => note.id !== action.noteId);
 
+    case EDIT_NOTE:
+     return state.map(note => note.id === action.noteId ? {...note, editing: true} : note);
+
     default:
       return state;
   }
 }
-
-// const NoteReducer = (state = initialState, action) => {
-//   switch (action.type) {
-//     default:
-//       return state;
-//   }
-// };
-
-// export default NoteReducer;
