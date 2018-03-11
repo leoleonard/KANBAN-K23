@@ -17,27 +17,3 @@ Note.propTypes = {
 };
 
 export default Note;
-
-
-// class Note extends Component {
-//   render() {
-//     return (
-//     );
-//   }
-// }
-
-// const mapStateToProps = (state) => {
-//   return {};
-// };
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {};
-// };
-
-// Note.propTypes = {
-// };
-
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(Note);
