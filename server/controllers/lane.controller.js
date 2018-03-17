@@ -1,19 +1,10 @@
 import Lane from '../models/lane';
-import Note from '../models/note';
 import uuid from 'uuid';
+
 
 export function getSomething(req, res) {
   return res.status(200).end();
 }
-
-export function getLanes(req, res) {
-  Lane.find().exec((err, lanes) => {
-    if (err) {
-      res.status(500).send(err);
-    }
-    res.json({ lanes });
-  });
-};
 
 export function addLane(req, res) {
   if (!req.body.name) {
@@ -29,35 +20,40 @@ export function addLane(req, res) {
     if (err) {
       res.status(500).send(err);
     }
-    res.json( saved );
+    res.json(saved);
+  });
+}
+
+export function getLanes(req, res) {
+  Lane.find().exec((err, lanes) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+    res.json({ lanes });
   });
 }
 
 export function deleteLane(req, res) {
-  Lane.findOneAndRemove({ id: req.params.laneId }).exec((err, lane) => {
-    if (err) {
+  Lane.findOne({id: req.params.laneId}).exec( (err, lane) => {
+    if(err) {
       res.status(500).send(err);
     }
-
-    lane.notes.forEach((noteId) => {
-      Note.findOneAndRemove({ _id: noteId }).exec((err) => {
-        if (err) {
-          res.status(500).send(err);
-        }
-        res.status(200).end();
-      })
-    })
+    if(lane) {
+      lane.remove(() => {
+        res.status(200).send('lane deleted!');
+      });
+    } else {
+      res.status(500).send();
+    }
   });
 }
 
-export function updateLane(req, res) {
-  if (!req.body.name) {
-    res.status(403).end();
-  }
-  Lane.findOneAndUpdate({ id: req.params.laneId }, { name: req.body.name }).exec((err, oldName) => {
-    if (err) {
+
+export function editLane(req, res) {
+	Lane.findOneAndUpdate({id: req.body.id} , {name: req.body.name}, {new: true}, (err , name) => {
+    if(err) {
       res.status(500).send(err);
     }
-    res.json(oldName);
-  });
+    res.json(Object.assign({}, name, {name: req.body.name}));
+  })
 }

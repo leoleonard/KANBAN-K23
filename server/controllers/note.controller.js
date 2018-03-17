@@ -2,6 +2,7 @@ import Note from '../models/note';
 import Lane from '../models/lane';
 import uuid from 'uuid';
 
+
 export function getSomething(req, res) {
   return res.status(200).end();
 }
@@ -33,30 +34,30 @@ export function addNote(req, res) {
   });
 }
 
-export function deleteNote(req, res) {
-  Note.findOneAndRemove({ id: req.params.noteId }).exec((err, note) => {
-    if (err) {
+
+export function editNote(req, res)  {
+
+  Note.findOneAndUpdate({id: req.body.id}, {task: req.body.task}, {new: true}, (err, task) => {
+    if(err) {
       res.status(500).send(err);
     }
-    Lane.findOne({ notes: { $in: [note._id] } })
-    .then(lane => {
-      lane.notes.remove(note._id);
-      lane.save();
-    })
-    .then(() => {
-      res.status(200).end();
-    });
-  });
+    res.json(task);
+  })
 }
 
-export function updateNote(req, res) {
-  if (!req.body.task) {
-    res.status(403).end();
-  }
-  Note.findOneAndUpdate({ id: req.params.noteId }, { task: req.body.task }).exec((err) => {
+
+export function deleteNote(req, res) {
+  Note.findOne({ id: req.params.noteId }).exec((err, note) => {
     if (err) {
       res.status(500).send(err);
     }
-    res.status(200).end();
+
+    if(note) {
+      note.remove(() => {
+        res.status(200).send('note deleted!');
+      });
+    } else {
+      res.status(500).send();
+    }
   });
 }

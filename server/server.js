@@ -36,7 +36,6 @@ import Helmet from 'react-helmet';
 // Import required modules
 import routes from '../client/routes';
 import { fetchComponentData } from './util/fetchData';
-// import posts from './routes/post.routes';
 import lanes from './routes/lane.routes';
 import notes from './routes/note.routes';
 import dummyData from './dummyData';
@@ -46,7 +45,11 @@ import serverConfig from './config';
 mongoose.Promise = global.Promise;
 
 // MongoDB Connection
-mongoose.connect(serverConfig.mongoURL, (error) => {
+const options = {
+  useMongoClient: true
+  }
+
+mongoose.connect(serverConfig.mongoURL, options, (error) => {
   if (error) {
     console.error('Please make sure Mongodb is installed and running!'); // eslint-disable-line no-console
     throw error;
@@ -61,7 +64,6 @@ app.use(compression());
 app.use(bodyParser.json({ limit: '20mb' }));
 app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
 app.use(Express.static(path.resolve(__dirname, '../dist/client')));
-// app.use('/api', posts);
 app.use('/api', lanes);
 app.use('/api', notes);
 
