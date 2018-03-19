@@ -7,7 +7,7 @@ export default class Edit extends Component {
       this.finishEdit(e);
     }
   }
-  
+
   finishEdit = (e) => {
     const value = e.target.value;
 
@@ -30,7 +30,7 @@ export default class Edit extends Component {
       </div>
     );
   }
-  
+
   renderEdit = () => {
      return (
        <input
@@ -42,7 +42,7 @@ export default class Edit extends Component {
        />
      );
    }
-  
+
   render() {
 
     return (
